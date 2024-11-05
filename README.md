@@ -1,20 +1,20 @@
-# Getting Started with Create React App
+# Super CRUD
 
-This project was bootstrapped with [Create React App]
+Este proyecto final fue realizado por mi persona para obtener el certificado del curso de Social Oplesk de Full Stack Developer, Nivel Avanzado.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Tutorial para ejecutar el proyecto de manera correcta
 
-### `npm dev`
+```diff
+* 1) Tienes que clonar el repositorio 
+  git clone https://github.com/RaykelJosue/hack_react.git
+  
+* 2) Desde la Terminal de Git Bash, cambiar el directorio hacia la carpeta de backend e instalar los paquetes necesarios para el backend.
+  pip install -r requirements.txt
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* 3) Desde la Terminal de Git Bash, cambiar el directorio hacia la carpeta de frontend e instalar los paquetes necesarios para el frontend.
+  npm install
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests]
+* 4) Para ejecutar el proyecto, debes estar dentro de la carpeta de frontend y colocar el siguiente comando en la Terminal de Git Bash:
+    npm run dev    
+```
