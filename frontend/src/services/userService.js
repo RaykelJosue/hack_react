@@ -1,60 +1,91 @@
-const API_URL = "http://localhost:5000/api/usuarios";
+const STORAGE_KEY = 'usuarios';
 
+// Función auxiliar para obtener usuarios del localStorage
+const getUsuariosFromStorage = () => {
+  const usuarios = localStorage.getItem(STORAGE_KEY);
+  return usuarios ? JSON.parse(usuarios) : [];
+};
+
+// Función auxiliar para guardar usuarios en localStorage
+const saveUsuariosToStorage = (usuarios) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(usuarios));
+};
 
 // Obtener todos los usuarios
 export const obtenerUsuarios = async () => {
-    const response = await fetch(API_URL);
-    return response.json();
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(getUsuariosFromStorage());
+    }, 100);
+  });
 };
-
 
 // Obtener un usuario específico por ID
 export const obtenerUsuarioPorId = async (id) => {
-    const response = await fetch(`${API_URL}/${id}`);
-    return response.json();
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const usuarios = getUsuariosFromStorage();
+      const usuario = usuarios.find(u => u.id === id);
+      if (usuario) {
+        resolve(usuario);
+      } else {
+        reject(new Error('Usuario no encontrado'));
+      }
+    }, 100);
+  });
 };
-
 
 // Crear un nuevo usuario
 export const agregarUsuario = async (usuario) => {
-    const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(usuario)
-    });
-
-    const data = await response.json();
-    console.log(data); // Para verificar la respuesta
-    return data;
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const usuarios = getUsuariosFromStorage();
+      const nuevoUsuario = {
+        ...usuario,
+        id: Date.now().toString() // Generamos un ID único
+      };
+      usuarios.push(nuevoUsuario);
+      saveUsuariosToStorage(usuarios);
+      resolve(nuevoUsuario);
+    }, 100);
+  });
 };
-
 
 // Actualizar un usuario existente
 export const actualizarUsuario = async (id, datosActualizados) => {
-    const response = await fetch(`${API_URL}/${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(datosActualizados)
-    });
-    return response.json();
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const usuarios = getUsuariosFromStorage();
+      const index = usuarios.findIndex(u => u.id === id);
+      if (index !== -1) {
+        usuarios[index] = { ...usuarios[index], ...datosActualizados };
+        saveUsuariosToStorage(usuarios);
+        resolve(usuarios[index]);
+      } else {
+        reject(new Error('Usuario no encontrado'));
+      }
+    }, 100);
+  });
 };
-
 
 // Eliminar un usuario
 export const eliminarUsuario = async (id) => {
-    const response = await fetch(`${API_URL}/${id}`, {
-        method: "DELETE"
-    });
-    return response.json();
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const usuarios = getUsuariosFromStorage();
+      const nuevosUsuarios = usuarios.filter(u => u.id !== id);
+      saveUsuariosToStorage(nuevosUsuarios);
+      resolve({ success: true });
+    }, 100);
+  });
 };
-
 
 // Obtener el total de usuarios
 export const obtenerTotalUsuarios = async () => {
-    const response = await fetch(`${API_URL}/total`);
-    return response.json();
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const usuarios = getUsuariosFromStorage();
+      resolve(usuarios.length);
+    }, 100);
+  });
 };

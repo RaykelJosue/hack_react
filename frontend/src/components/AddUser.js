@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { agregarUsuario, actualizarUsuario } from '../services/userService';
 
-const AddUser = ({ onUserAdded, onUserEdited, usuarioEditado, isAddingUser, resetForm }) => {
+const AddUser = ({ onUserAdded, onUserEdited, usuarioEditado, isAddingUser, resetForm, onClose }) => {
     const [nombre, setNombre] = useState('');
     const [correo, setCorreo] = useState('');
     const [edad, setEdad] = useState('');
@@ -35,7 +35,10 @@ const AddUser = ({ onUserAdded, onUserEdited, usuarioEditado, isAddingUser, rese
 
     return (
         <div className="form-container">
-            <h2>{usuarioEditado ? 'Editar Usuario' : 'Agregar Usuario'}</h2>
+            <div className="form-header">
+                <h2>{usuarioEditado ? 'Editar Usuario' : 'Agregar Usuario'}</h2>
+                <button className="modal-close" onClick={onClose}>X</button>
+            </div>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"

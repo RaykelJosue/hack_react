@@ -32,7 +32,7 @@ const UserList = () => {
         if (usuarioAEliminar) {
             try {
                 await eliminarUsuario(usuarioAEliminar.id);
-                setUsuarios(usuarios.filter(usuario => usuario.id !== usuarioAEliminar.id));
+                await fetchUsuarios();
                 setUsuarioAEliminar(null);
                 setConfirmDeleteModalOpen(false);
                 showNotification('Usuario eliminado de manera exitosa', 'error');
@@ -49,6 +49,7 @@ const UserList = () => {
 
     const handleEdit = (usuario) => {
         setUsuarioEditado(usuario);
+        setIsAddingUser(false);
         setModalOpen(true);
     };
 
@@ -123,7 +124,13 @@ const UserList = () => {
         <div className="container">
             <h1 className="title">Super CRUD</h1>
 
-            {notification && <Notification message={notification.message} type={notification.type} />}
+            {notification && (
+                <Notification
+                    key={Date.now()}
+                    message={notification.message}
+                    type={notification.type}
+                />
+            )}
 
             <Modal isOpen={modalOpen} onClose={handleCloseModal}>
                 <AddUser
@@ -132,14 +139,19 @@ const UserList = () => {
                     usuarioEditado={usuarioEditado}
                     isAddingUser={isAddingUser}
                     resetForm={handleCloseModal}
+                    onClose={handleCloseModal}
                 />
             </Modal>
 
             <Modal isOpen={confirmDeleteModalOpen} onClose={handleCloseConfirmDelete}>
-                <h2>Confirmación</h2>
-                <p>¿Estás seguro que deseas eliminar el nombre de {usuarioAEliminar?.nombre}?</p>
-                <button className="confirm-button" onClick={handleDelete}>Sí</button>
-                <button className="cancel-button" onClick={handleCloseConfirmDelete}>No</button>
+                <div className="confirm-delete-modal">
+                    <h2>Confirmación</h2>
+                    <p>¿Estás seguro que deseas eliminar el nombre de {usuarioAEliminar?.nombre}?</p>
+                    <div className="confirm-delete-buttons">
+                        <button className="confirm-button" onClick={handleDelete}>Sí</button>
+                        <button className="cancel-button" onClick={handleCloseConfirmDelete}>No</button>
+                    </div>
+                </div>
             </Modal>
 
             <div className="user-list-container">

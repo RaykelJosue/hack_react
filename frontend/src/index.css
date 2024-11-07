@@ -41,13 +41,32 @@ body {
   margin-bottom: 2rem;
 }
 
+.form-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.form-header h2 {
+  flex: 1;
+  text-align: center;
+}
+
+.form-header .modal-close {
+  position: absolute;
+  right: 0;
+}
+
 .dark .form-container {
   background-color: #444;
   color: #fff;
 }
 
 .form-container h2 {
-  margin-bottom: 1rem;
+  margin: 0;
+  text-align: center;
 }
 
 .form-container form {
@@ -58,10 +77,8 @@ body {
 
 .form-container input {
   padding: 0.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #fff;
-  color: #333;
 }
 
 .dark .form-container input {
@@ -71,18 +88,32 @@ body {
 }
 
 .form-container button {
-  padding: 0.6rem;
-  border: none;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
   background-color: #007bff;
   color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem;
 }
 
 .form-container button:hover {
   background-color: #0056b3;
 }
+
+.form-container .modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+  padding: 0;
+  line-height: 1;
+}
+
+.dark .form-container .modal-close {
+  color: #fff;
+}
+
 
 /* Lista de usuarios */
 .user-list-container {
@@ -210,7 +241,7 @@ body {
   justify-content: center;
   align-items: center;
   opacity: 0;
-  visibility:  hidden;
+  visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
@@ -226,35 +257,34 @@ body {
   width: 90%;
   max-width: 500px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  transform: translateY(30px);
+  transform: translateY(20px);
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.dark .modal-container {
-  background-color: #444;
-  color: #fff;
+.modal-content-visible {
+  transform: translateY(0);
+  opacity: 1;
 }
 
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: #333;
-  font-size: 1.5rem;
-  cursor: pointer;
+.dark .modal-container {
+  background-color: #333;
+  color: white;
+}
+
+.modal-close:hover,
+.form-container .modal-close:hover {
+  background: none !important;
+  color: inherit;
 }
 
 .dark .modal-close {
   color: #fff;
 }
 
-.modal-visible .modal-container {
-  transform: translateY(0);
-  opacity: 1;
+.dark .modal-close:hover {
+  color: inherit;
+  background: none;
 }
 
 /* Estilos para el modal de confirmación */
@@ -320,6 +350,7 @@ body {
   border-radius: 4px;
   z-index: 1000;
   color: white;
+  animation: slideIn 0.3s ease forwards, slideOut 0.3s ease forwards 2.7s;
 }
 
 .notification.success {
@@ -332,6 +363,29 @@ body {
 
 .notification.error {
   background-color: #dc3545;
+}
+
+/* Animaciones para notificaciones */
+@keyframes slideIn {
+  from {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
 }
 
 /* Estilos para el botón "Ver más" */
